@@ -1,0 +1,4 @@
+# 不要なフォルダをGitHubに上げないための設定
+node_modules/
+dist/
+.env

@@ -1,0 +1,1706 @@
+/* ═══════════════════════════════════════════════════════════════════════════
+   styles.css — 学習タイマー
+   Material Design 3 / CSS custom properties synced with theme.ts
+   Light tokens → :root  |  Dark tokens → @media (prefers-color-scheme: dark)
+═══════════════════════════════════════════════════════════════════════════ */
+
+/* ── 1. CSS Custom Properties ────────────────────────────────────────────── */
+
+:root {
+  /* Primary */
+  --md-primary:                  #1565C0;
+  --md-on-primary:               #FFFFFF;
+  --md-primary-container:        #D6E4FF;
+  --md-on-primary-container:     #001945;
+  --md-inverse-primary:          #A8C7FA;
+
+  /* Secondary */
+  --md-secondary:                #535F70;
+  --md-on-secondary:             #FFFFFF;
+  --md-secondary-container:      #D7E3F7;
+  --md-on-secondary-container:   #101C2B;
+
+  /* Error */
+  --md-error:                    #BA1A1A;
+  --md-on-error:                 #FFFFFF;
+  --md-error-container:          #FFDAD6;
+  --md-on-error-container:       #410002;
+
+  /* Background / Surface */
+  --md-background:               #F5F7FA;
+  --md-on-background:            #1A1C1E;
+  --md-surface:                  #F5F7FA;
+  --md-on-surface:               #1A1C1E;
+  --md-surface-variant:          #DFE4EC;
+  --md-on-surface-variant:       #43474E;
+  --md-inverse-surface:          #2F3033;
+  --md-inverse-on-surface:       #F1F0F4;
+
+  /* Surface containers */
+  --md-surface-container-lowest: #FFFFFF;
+  --md-surface-container-low:    #F0F3F9;
+  --md-surface-container:        #EBF0F5;
+  --md-surface-container-high:   #E5EAF0;
+  --md-surface-container-highest:#DFE4EC;
+
+  /* Outline */
+  --md-outline:                  #73777F;
+  --md-outline-variant:          #C3C7CF;
+
+  /* Elevation shadows (light) */
+  --md-elevation-1: 0 1px 3px rgba(0,0,0,.10), 0 1px 2px rgba(0,0,0,.06);
+  --md-elevation-2: 0 3px 8px rgba(0,0,0,.12), 0 2px 4px rgba(0,0,0,.08);
+  --md-elevation-3: 0 6px 18px rgba(0,0,0,.14), 0 3px 6px rgba(0,0,0,.10);
+
+  /* Shape */
+  --shape-xs:   4px;
+  --shape-sm:   8px;
+  --shape-md:   12px;
+  --shape-lg:   16px;
+  --shape-xl:   20px;
+  --shape-2xl:  28px;
+  --shape-full: 9999px;
+
+  /* Motion */
+  --ease-standard:   cubic-bezier(.2,0,0,1);
+  --ease-decelerate: cubic-bezier(0,0,0,1);
+  --ease-accelerate: cubic-bezier(.3,0,1,1);
+  --ease-spring:     cubic-bezier(.34,1.56,.64,1);
+
+  /* Layout */
+  --nav-height:   64px;
+  --safe-top:     env(safe-area-inset-top,    0px);
+  --safe-bottom:  env(safe-area-inset-bottom, 0px);
+  --safe-left:    env(safe-area-inset-left,   0px);
+  --safe-right:   env(safe-area-inset-right,  0px);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    /* Primary */
+    --md-primary:                  #A8C7FA;
+    --md-on-primary:               #002F67;
+    --md-primary-container:        #004199;
+    --md-on-primary-container:     #D6E4FF;
+    --md-inverse-primary:          #1565C0;
+
+    /* Secondary */
+    --md-secondary:                #BBC7DB;
+    --md-on-secondary:             #253140;
+    --md-secondary-container:      #3B4858;
+    --md-on-secondary-container:   #D7E3F7;
+
+    /* Error */
+    --md-error:                    #FFB4AB;
+    --md-on-error:                 #690005;
+    --md-error-container:          #93000A;
+    --md-on-error-container:       #FFDAD6;
+
+    /* Background / Surface */
+    --md-background:               #0D1117;
+    --md-on-background:            #E2E2E6;
+    --md-surface:                  #0D1117;
+    --md-on-surface:               #E2E2E6;
+    --md-surface-variant:          #43474E;
+    --md-on-surface-variant:       #C3C7CF;
+    --md-inverse-surface:          #E2E2E6;
+    --md-inverse-on-surface:       #2F3033;
+
+    /* Surface containers */
+    --md-surface-container-lowest: #0C0F12;
+    --md-surface-container-low:    #1A1C1E;
+    --md-surface-container:        #1E2124;
+    --md-surface-container-high:   #282B2E;
+    --md-surface-container-highest:#333639;
+
+    /* Outline */
+    --md-outline:                  #8D9199;
+    --md-outline-variant:          #43474E;
+
+    /* Elevation shadows (dark — subtler) */
+    --md-elevation-1: 0 1px 3px rgba(0,0,0,.30), 0 1px 2px rgba(0,0,0,.20);
+    --md-elevation-2: 0 3px 8px rgba(0,0,0,.36), 0 2px 4px rgba(0,0,0,.24);
+    --md-elevation-3: 0 6px 18px rgba(0,0,0,.42), 0 3px 6px rgba(0,0,0,.28);
+  }
+}
+
+/* ── 2. Reset & Base ─────────────────────────────────────────────────────── */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin:     0;
+  padding:    0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html {
+  height:           100%;
+  overflow:         hidden;
+  font-size:        16px;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  height:           100%;
+  overflow:         hidden;
+  background-color: var(--md-background);
+  color:            var(--md-on-background);
+  font-family:      'Hiragino Kaku Gothic ProN', 'Hiragino Sans',
+                    'BIZ UDPGothic', Meiryo, system-ui, sans-serif;
+  font-size:        15px;
+  line-height:      1.5;
+  user-select:      none;
+  -webkit-font-smoothing: antialiased;
+}
+
+input, textarea, select, button {
+  font-family: inherit;
+  font-size:   inherit;
+  line-height: inherit;
+}
+
+input, textarea {
+  user-select: text;
+}
+
+button {
+  background: none;
+  border:     none;
+  cursor:     pointer;
+  color:      inherit;
+}
+
+a { color: inherit; text-decoration: none; }
+
+#root {
+  height:   100%;
+  display:  flex;
+  flex-direction: column;
+}
+
+/* ── 3. Typography ───────────────────────────────────────────────────────── */
+
+.type-display-sm  { font-size: 36px; font-weight: 400; line-height: 1.2; letter-spacing: -.5px; }
+.type-headline-lg { font-size: 32px; font-weight: 400; line-height: 1.25; }
+.type-headline-md { font-size: 28px; font-weight: 400; line-height: 1.28; }
+.type-headline-sm { font-size: 24px; font-weight: 400; line-height: 1.33; }
+.type-title-lg    { font-size: 22px; font-weight: 600; line-height: 1.27; }
+.type-title-md    { font-size: 16px; font-weight: 600; line-height: 1.5; letter-spacing: .01em; }
+.type-title-sm    { font-size: 14px; font-weight: 600; line-height: 1.43; letter-spacing: .01em; }
+.type-body-lg     { font-size: 16px; font-weight: 400; line-height: 1.5; }
+.type-body-md     { font-size: 14px; font-weight: 400; line-height: 1.43; letter-spacing: .01em; }
+.type-body-sm     { font-size: 12px; font-weight: 400; line-height: 1.33; letter-spacing: .03em; }
+.type-label-lg    { font-size: 14px; font-weight: 600; line-height: 1.43; letter-spacing: .01em; }
+.type-label-md    { font-size: 12px; font-weight: 600; line-height: 1.33; letter-spacing: .04em; }
+.type-label-sm    { font-size: 11px; font-weight: 600; line-height: 1.45; letter-spacing: .05em; }
+
+.text-primary        { color: var(--md-primary); }
+.text-secondary      { color: var(--md-on-surface-variant); }
+.text-error          { color: var(--md-error); }
+.text-on-surface     { color: var(--md-on-surface); }
+
+/* ── 4. App Shell ────────────────────────────────────────────────────────── */
+
+.app {
+  display:        flex;
+  flex-direction: column;
+  height:         100%;
+  max-width:      600px;
+  margin:         0 auto;
+  position:       relative;
+  overflow:       hidden;
+  background-color: var(--md-background);
+}
+
+.main-content {
+  flex:                     1;
+  overflow-y:               auto;
+  overflow-x:               hidden;
+  overscroll-behavior-y:    contain;
+  -webkit-overflow-scrolling: touch;
+  padding-bottom: calc(var(--nav-height) + var(--safe-bottom));
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.main-content::-webkit-scrollbar { display: none; }
+
+/* ── 5. Screen ───────────────────────────────────────────────────────────── */
+
+.screen {
+  min-height:  100%;
+  padding:     0 16px 32px;
+  padding-top: calc(var(--safe-top) + 8px);
+}
+
+.screen-header {
+  padding: 20px 0 24px;
+}
+
+.screen-subtitle {
+  font-size:   12px;
+  font-weight: 600;
+  color:       var(--md-on-surface-variant);
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  margin-bottom: 6px;
+  opacity: .8;
+}
+
+.screen-title {
+  font-size:      28px;
+  font-weight:    800;
+  letter-spacing: -.5px;
+  color:          var(--md-on-background);
+  line-height:    1.15;
+}
+
+/* ── 6. Screen Transitions ───────────────────────────────────────────────── */
+
+.screen-enter {
+  animation: screenEnter 280ms var(--ease-decelerate) both;
+}
+.screen-slide-right {
+  animation: slideInFromRight 300ms var(--ease-decelerate) both;
+}
+.screen-slide-left {
+  animation: slideInFromLeft  300ms var(--ease-decelerate) both;
+}
+
+@keyframes screenEnter {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes slideInFromRight {
+  from { opacity: 0; transform: translateX(40px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+@keyframes slideInFromLeft {
+  from { opacity: 0; transform: translateX(-40px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(.88); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+/* ── 7. Bottom Navigation ────────────────────────────────────────────────── */
+
+.bottom-nav {
+  display:          flex;
+  align-items:      stretch;
+  background-color: var(--md-surface-container-low);
+  border-top:       1px solid var(--md-outline-variant);
+  height:           calc(var(--nav-height) + var(--safe-bottom));
+  padding-bottom:   var(--safe-bottom);
+  
+  /* ▼ 修正・追加：縦にも横にも絶対に潰れないようにする */
+  flex-shrink:      0;
+  width:            100%;
+  box-sizing:       border-box;
+  
+  position:         relative;
+  z-index:          100;
+}
+
+.nav-item {
+  flex:            1;
+  display:         flex;
+  flex-direction:  column;
+  align-items:     center;
+  justify-content: center;
+  gap:             4px;
+  position:        relative;
+  padding:         8px 0;
+  color:           var(--md-on-surface-variant);
+  transition:      color 200ms var(--ease-standard);
+  touch-action:    manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.nav-item--active {
+  color: var(--md-primary);
+}
+
+.nav-indicator {
+  position:         absolute;
+  top:              6px;
+  left:             50%;
+  transform:        translateX(-50%);
+  width:            64px;
+  height:           32px;
+  border-radius:    var(--shape-full);
+  background-color: var(--md-secondary-container);
+  opacity:          0;
+  transition:       opacity 200ms var(--ease-standard),
+                    width   200ms var(--ease-standard);
+}
+.nav-item--active .nav-indicator {
+  opacity: 1;
+}
+
+.nav-icon {
+  position: relative;
+  z-index:  1;
+  width:    24px;
+  height:   24px;
+  display:  flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.nav-label {
+  font-size:   10px;
+  font-weight: 600;
+  letter-spacing: .04em;
+  position:   relative;
+  z-index:    1;
+}
+
+.nav-badge {
+  position:         absolute;
+  top:              4px;
+  right:            calc(50% - 20px);
+  width:            8px;
+  height:           8px;
+  border-radius:    50%;
+  background-color: var(--md-primary);
+  border:           2px solid var(--md-surface-container-low);
+  animation:        badgePop 300ms var(--ease-spring) both;
+  z-index:          2;
+}
+
+@keyframes badgePop {
+  from { transform: scale(0); }
+  to   { transform: scale(1); }
+}
+
+/* ── 8. Buttons ──────────────────────────────────────────────────────────── */
+
+.btn {
+  display:         inline-flex;
+  align-items:     center;
+  justify-content: center;
+  gap:             8px;
+  padding:         10px 24px;
+  border-radius:   var(--shape-full);
+  font-size:       14px;
+  font-weight:     600;
+  letter-spacing:  .02em;
+  white-space:     nowrap;
+  cursor:          pointer;
+  outline:         none;
+  border:          none;
+  position:        relative;
+  overflow:        hidden;
+  transition:      opacity    120ms var(--ease-standard),
+                   transform  120ms var(--ease-standard),
+                   box-shadow 200ms var(--ease-standard);
+  touch-action:    manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* State layer */
+.btn::after {
+  content:          '';
+  position:         absolute;
+  inset:            0;
+  border-radius:    inherit;
+  background-color: currentColor;
+  opacity:          0;
+  transition:       opacity 160ms var(--ease-standard);
+}
+.btn:hover::after  { opacity: .06; }
+.btn:active::after { opacity: .12; }
+.btn:active { transform: scale(.97); transition-duration: 50ms; }
+.btn:disabled {
+  opacity: .38;
+  cursor:  not-allowed;
+  pointer-events: none;
+}
+
+/* Filled */
+.btn-filled {
+  background-color: var(--md-primary);
+  color:            var(--md-on-primary);
+  box-shadow:       var(--md-elevation-1);
+}
+.btn-filled:hover { box-shadow: var(--md-elevation-2); }
+
+/* Tonal */
+.btn-tonal {
+  background-color: var(--md-secondary-container);
+  color:            var(--md-on-secondary-container);
+}
+
+/* Outlined */
+.btn-outlined {
+  background-color: transparent;
+  color:            var(--md-primary);
+  border:           1.5px solid var(--md-outline-variant);
+}
+
+/* Text */
+.btn-text {
+  background-color: transparent;
+  color:            var(--md-primary);
+  padding:          10px 12px;
+}
+
+/* Icon */
+.btn-icon {
+  background-color: transparent;
+  color:            var(--md-on-surface-variant);
+  padding:          8px;
+  border-radius:    var(--shape-full);
+  width:            40px;
+  height:           40px;
+}
+
+/* Danger */
+.btn-danger {
+  background-color: var(--md-error);
+  color:            var(--md-on-error);
+}
+
+/* Utility */
+.full-w { width: 100%; }
+
+/* ── 9. Timer Circular Buttons ───────────────────────────────────────────── */
+
+.btn-round {
+  width:           80px;
+  height:          80px;
+  border-radius:   50%;
+  flex-direction:  column;
+  gap:             3px;
+  font-size:       11px;
+  font-weight:     700;
+  letter-spacing:  .06em;
+  box-shadow:      var(--md-elevation-2);
+}
+.btn-round--start {
+  background-color: var(--md-primary);
+  color:            var(--md-on-primary);
+}
+.btn-round--stop {
+  background-color: var(--md-error-container);
+  color:            var(--md-on-error-container);
+}
+
+/* ── 10. Chips ───────────────────────────────────────────────────────────── */
+
+.chips-scroll {
+  display:          flex;
+  gap:              8px;
+  overflow-x:       auto;
+  padding:          4px 16px 8px;
+  margin-left:      -16px;
+  margin-right:     -16px;
+  scrollbar-width:  none;
+  -ms-overflow-style: none;
+}
+.chips-scroll::-webkit-scrollbar { display: none; }
+
+.chips-row {
+  display:   flex;
+  flex-wrap: wrap;
+  gap:       8px;
+}
+
+.chip {
+  display:         inline-flex;
+  align-items:     center;
+  gap:             6px;
+  padding:         8px 16px;
+  border-radius:   var(--shape-full);
+  font-size:       13px;
+  font-weight:     500;
+  white-space:     nowrap;
+  cursor:          pointer;
+  border:          1.5px solid var(--md-outline-variant);
+  background-color: var(--md-surface-container-low);
+  color:           var(--md-on-surface-variant);
+  transition:      background-color 150ms var(--ease-standard),
+                   border-color     150ms var(--ease-standard),
+                   color            150ms var(--ease-standard);
+  touch-action:    manipulation;
+  -webkit-tap-highlight-color: transparent;
+  position: relative; overflow: hidden;
+}
+.chip::after {
+  content: ''; position: absolute; inset: 0;
+  background-color: currentColor; opacity: 0;
+  transition: opacity 150ms var(--ease-standard);
+}
+.chip:hover::after  { opacity: .06; }
+.chip:active::after { opacity: .12; }
+
+.chip--selected {
+  background-color: var(--md-primary-container);
+  border-color:     var(--md-primary-container);
+  color:            var(--md-on-primary-container);
+  font-weight:      600;
+}
+.chip--disabled {
+  opacity:        .38;
+  pointer-events: none;
+}
+.chip-dot {
+  width:         10px;
+  height:        10px;
+  border-radius: 50%;
+  flex-shrink:   0;
+}
+
+/* ── 11. Form Elements ───────────────────────────────────────────────────── */
+
+.field {
+  display:        flex;
+  flex-direction: column;
+  gap:            6px;
+  margin-bottom:  16px;
+}
+
+.field-label {
+  font-size:      12px;
+  font-weight:    600;
+  color:          var(--md-on-surface-variant);
+  text-transform: uppercase;
+  letter-spacing: .06em;
+}
+
+.field-input {
+  width:            100%;
+  padding:          12px 16px;
+  border-radius:    var(--shape-md);
+  border:           1.5px solid var(--md-outline-variant);
+  background-color: var(--md-surface-container-low);
+  color:            var(--md-on-surface);
+  font-size:        15px;
+  font-weight:      500;
+  outline:          none;
+  transition:       border-color 150ms var(--ease-standard);
+  appearance:       none;
+  -webkit-appearance: none;
+}
+.field-input:focus {
+  border-color: var(--md-primary);
+}
+.field-input[type="date"] {
+  color-scheme: light dark;
+}
+
+.field-error {
+  font-size:  12px;
+  font-weight: 500;
+  color:      var(--md-error);
+  margin-top: -2px;
+}
+
+.time-inputs-row {
+  display: flex;
+  gap:     12px;
+}
+.time-input-group {
+  display:     flex;
+  align-items: center;
+  gap:         8px;
+}
+.time-number-input {
+  width:       76px !important;
+  font-size:   22px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0 !important;
+  padding:     10px 6px !important;
+  text-align:  center;
+}
+.time-unit-label {
+  font-size:   14px;
+  font-weight: 500;
+  color:       var(--md-on-surface-variant);
+  white-space: nowrap;
+}
+
+/* Divider */
+.divider {
+  height:           1px;
+  background-color: var(--md-outline-variant);
+  opacity:          .6;
+}
+
+/* ── 12. Modal ───────────────────────────────────────────────────────────── */
+
+.modal-backdrop {
+  position:         fixed;
+  inset:            0;
+  background-color: rgba(0,0,0,.5);
+  backdrop-filter:  blur(2px);
+  z-index:          200;
+  display:          flex;
+  align-items:      flex-end;
+  animation:        fadeIn 200ms var(--ease-standard) both;
+}
+
+.modal-sheet {
+  width:            100%;
+  max-width:        600px;
+  margin:           0 auto;
+  background-color: var(--md-surface-container-low);
+  border-radius:    var(--shape-2xl) var(--shape-2xl) 0 0;
+  padding:          12px 20px calc(24px + var(--safe-bottom));
+  max-height:       92vh;
+  overflow-y:       auto;
+  animation:        slideUp 320ms var(--ease-decelerate) both;
+}
+
+.modal-handle {
+  width:            36px;
+  height:           4px;
+  border-radius:    var(--shape-full);
+  background-color: var(--md-outline-variant);
+  margin:           0 auto 20px;
+}
+
+.modal-title {
+  font-size:    20px;
+  font-weight:  700;
+  letter-spacing: -.2px;
+  color:        var(--md-on-surface);
+  margin-bottom: 20px;
+}
+
+.modal-dialog-backdrop {
+  position:         fixed;
+  inset:            0;
+  background-color: rgba(0,0,0,.5);
+  backdrop-filter:  blur(2px);
+  z-index:          300;
+  display:          flex;
+  align-items:      center;
+  justify-content:  center;
+  padding:          24px;
+  animation:        fadeIn 180ms var(--ease-standard) both;
+}
+
+.modal-dialog {
+  width:            100%;
+  max-width:        400px;
+  background-color: var(--md-surface-container-low);
+  border-radius:    var(--shape-2xl);
+  padding:          24px;
+  box-shadow:       var(--md-elevation-3);
+  animation:        scaleIn 220ms var(--ease-decelerate) both;
+}
+
+/* ── 13. Empty State ─────────────────────────────────────────────────────── */
+
+.empty-state {
+  display:         flex;
+  flex-direction:  column;
+  align-items:     center;
+  justify-content: center;
+  text-align:      center;
+  padding:         48px 24px;
+  min-height:      240px;
+  gap:             0;
+}
+
+.empty-state-icon {
+  width:            72px;
+  height:           72px;
+  border-radius:    var(--shape-2xl);
+  background-color: var(--md-surface-container);
+  display:          flex;
+  align-items:      center;
+  justify-content:  center;
+  color:            var(--md-on-surface-variant);
+  margin-bottom:    20px;
+  opacity:          .7;
+}
+.empty-state-icon svg { width: 36px; height: 36px; }
+
+.empty-state-title {
+  font-size:     17px;
+  font-weight:   700;
+  color:         var(--md-on-surface);
+  margin-bottom: 8px;
+}
+
+.empty-state-body {
+  font-size:  13px;
+  color:      var(--md-on-surface-variant);
+  line-height: 1.6;
+}
+
+/* ── 14. Spinner ─────────────────────────────────────────────────────────── */
+
+.spinner {
+  width:            36px;
+  height:           36px;
+  border:           3px solid var(--md-outline-variant);
+  border-top-color: var(--md-primary);
+  border-radius:    50%;
+  animation:        spin 700ms linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ── 15. Dashboard ───────────────────────────────────────────────────────── */
+
+.stat-grid {
+  display:               grid;
+  grid-template-columns: 1fr 1fr;
+  gap:                   12px;
+  margin-bottom:         12px;
+}
+
+.stat-card {
+  display:          flex;
+  flex-direction:   column;
+  justify-content:  space-between;
+  padding:          18px 20px;
+  border-radius:    var(--shape-xl);
+  background-color: var(--md-surface-container-low);
+  min-height:       120px;
+  position:         relative;
+  overflow:         hidden;
+  transition:       background-color 180ms var(--ease-standard);
+}
+
+.stat-label {
+  font-size:   11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .07em;
+  color:       var(--md-on-surface-variant);
+  opacity:     .8;
+}
+
+.stat-value {
+  font-size:      28px;
+  font-weight:    800;
+  letter-spacing: -1px;
+  color:          var(--md-on-surface);
+  line-height:    1;
+  margin-top:     auto;
+  padding-top:    12px;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Card variants */
+.stat-card--primary {
+  background-color: var(--md-primary-container);
+}
+.stat-card--primary .stat-label { color: var(--md-on-primary-container); opacity: .72; }
+.stat-card--primary .stat-value { color: var(--md-on-primary-container); }
+
+.stat-card--tonal {
+  background-color: var(--md-secondary-container);
+}
+.stat-card--tonal .stat-label { color: var(--md-on-secondary-container); opacity: .72; }
+.stat-card--tonal .stat-value { color: var(--md-on-secondary-container); }
+
+/* Unset / CTA card (button) */
+.stat-card--unset {
+  background-color: var(--md-surface-container);
+  border:           1.5px dashed var(--md-outline-variant);
+  display:          flex;
+  flex-direction:   column;
+  align-items:      center;
+  justify-content:  center;
+  gap:              8px;
+  cursor:           pointer;
+  text-align:       center;
+  min-height:       120px;
+  border-radius:    var(--shape-xl);
+  padding:          18px 20px;
+}
+.stat-card--unset .stat-label { opacity: .7; }
+.stat-cta-text {
+  font-size:   14px;
+  font-weight: 600;
+  color:       var(--md-primary);
+}
+
+/* Countdown */
+.stat-card--countdown {}
+.stat-days-row {
+  display:     flex;
+  align-items: baseline;
+  gap:         3px;
+  margin-top:  auto;
+  padding-top: 12px;
+}
+.stat-days-num {
+  font-size:      40px;
+  font-weight:    800;
+  letter-spacing: -2px;
+  color:          var(--md-on-surface);
+  font-variant-numeric: tabular-nums;
+  line-height:    1;
+}
+.stat-days-unit {
+  font-size:  16px;
+  font-weight: 600;
+  color:      var(--md-on-surface-variant);
+}
+.stat-card--urgent {
+  background-color: var(--md-error-container);
+}
+.stat-card--urgent .stat-label    { color: var(--md-on-error-container); opacity: .72; }
+.stat-card--urgent .stat-days-num { color: var(--md-on-error-container); }
+.stat-card--urgent .stat-days-unit{ color: var(--md-on-error-container); opacity: .72; }
+
+/* Streak card */
+.stat-card--streak {
+  margin-top:       12px;
+  flex-direction:   row;
+  align-items:      center;
+  justify-content:  space-between;
+  min-height:       84px;
+  background-color: var(--md-surface-container-low);
+  padding:          20px 24px;
+  border-radius:    var(--shape-xl);
+}
+.stat-card--streak-active {
+  background-color: var(--md-primary-container);
+}
+.streak-body {
+  display:        flex;
+  flex-direction: column;
+  gap:            6px;
+  flex:           1;
+}
+.streak-row {
+  display:     flex;
+  align-items: baseline;
+  gap:         4px;
+}
+.streak-num {
+  font-size:    44px;
+  font-weight:  800;
+  letter-spacing: -2px;
+  line-height:  1;
+  color:        var(--md-on-surface);
+  font-variant-numeric: tabular-nums;
+}
+.streak-unit {
+  font-size:   18px;
+  font-weight: 600;
+  color:       var(--md-on-surface);
+}
+.stat-card--streak-active .streak-num,
+.stat-card--streak-active .streak-unit { color: var(--md-on-primary-container); }
+.stat-card--streak-active .stat-label  { color: var(--md-on-primary-container); opacity: .72; }
+
+.streak-zero {
+  font-size:   14px;
+  font-weight: 500;
+  color:       var(--md-on-surface-variant);
+  margin-top:  4px;
+}
+
+.streak-icon {
+  width:      44px;
+  height:     44px;
+  flex-shrink: 0;
+  color:      var(--md-primary);
+  opacity:    .75;
+}
+.stat-card--streak-active .streak-icon {
+  color:   var(--md-on-primary-container);
+  opacity: .65;
+}
+
+/* Skeleton */
+.stat-card--skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--md-surface-container-low) 0%,
+    var(--md-surface-container-high) 50%,
+    var(--md-surface-container-low) 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position:  200% 0; }
+}
+
+/* ── 16. Timer Screen ────────────────────────────────────────────────────── */
+
+.timer-screen {
+  display:        flex;
+  flex-direction: column;
+  min-height:     100%;
+}
+
+.timer-display {
+  flex:            1;
+  display:         flex;
+  flex-direction:  column;
+  align-items:     center;
+  justify-content: center;
+  padding:         24px 0;
+  min-height:      220px;
+  position:        relative;
+}
+
+.timer-subject-tag {
+  display:         flex;
+  align-items:     center;
+  gap:             7px;
+  font-size:       14px;
+  font-weight:     600;
+  color:           var(--md-on-surface-variant);
+  margin-bottom:   16px;
+}
+.timer-subject-tag--idle { opacity: .5; }
+.timer-subject-dot {
+  width:         10px;
+  height:        10px;
+  border-radius: 50%;
+  flex-shrink:   0;
+}
+
+.timer-time {
+  font-size:      60px;
+  font-weight:    800;
+  letter-spacing: -3px;
+  color:          var(--md-on-surface);
+  line-height:    1;
+  font-variant-numeric: tabular-nums;
+  transition:     color 300ms var(--ease-standard);
+}
+.timer-time--running {
+  color: var(--md-primary);
+  animation: timerPulse 2.4s ease-in-out infinite;
+}
+
+@keyframes timerPulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: .75; }
+}
+
+.timer-pulse-ring {
+  position:         absolute;
+  width:            160px;
+  height:           160px;
+  border-radius:    50%;
+  border:           2px solid var(--md-primary);
+  opacity:          0;
+  animation:        pulseRing 2.4s ease-out infinite;
+  pointer-events:   none;
+}
+
+@keyframes pulseRing {
+  0%   { transform: scale(.7); opacity: .5; }
+  70%  { transform: scale(1.3); opacity: 0; }
+  100% { transform: scale(1.3); opacity: 0; }
+}
+
+.timer-controls {
+  display:         flex;
+  align-items:     center;
+  justify-content: center;
+  padding:         16px 0 20px;
+}
+
+.timer-secondary-actions {
+  display:         flex;
+  align-items:     center;
+  justify-content: center;
+  gap:             12px;
+  padding:         0 0 12px;
+  flex-wrap:       wrap;
+}
+
+.timer-no-subjects {
+  display:         flex;
+  align-items:     center;
+  justify-content: center;
+  padding:         16px;
+  text-align:      center;
+}
+
+/* ── 17. Charts Screen ───────────────────────────────────────────────────── */
+
+.chart-section {
+  margin-bottom: 4px;
+}
+
+.chart-section-title {
+  font-size:      11px;
+  font-weight:    700;
+  color:          var(--md-on-surface-variant);
+  text-transform: uppercase;
+  letter-spacing: .09em;
+  margin-bottom:  12px;
+  opacity:        .8;
+}
+
+.chart-container {
+  background-color: var(--md-surface-container-low);
+  border-radius:    var(--shape-xl);
+  padding:          16px 6px 12px;
+  overflow:         hidden;
+}
+
+.chart-empty {
+  background-color: var(--md-surface-container-low);
+  border-radius:    var(--shape-xl);
+  padding:          36px;
+  text-align:       center;
+  font-size:        13px;
+  color:            var(--md-on-surface-variant);
+  min-height:       80px;
+  display:          flex;
+  align-items:      center;
+  justify-content:  center;
+  opacity:          .7;
+}
+
+/* Chart Tooltip — floating card design */
+.chart-tooltip {
+  background-color: var(--md-inverse-surface);
+  color:            var(--md-inverse-on-surface);
+  border-radius:    var(--shape-lg);
+  padding:          12px 16px;
+  min-width:        156px;
+  max-width:        220px;
+  font-size:        13px;
+  box-shadow:
+    0  8px 24px rgba(0,0,0,.22),
+    0  2px  8px rgba(0,0,0,.16),
+    0  0    0 1px rgba(255,255,255,.04);
+  pointer-events: none;
+  backdrop-filter: blur(8px);
+  
+  pointer-events: none; /* ←超重要：マウスや指の判定をスルーさせて誤作動を防ぐ */
+  z-index: 9999;        /* ←最前面に引っ張り出す */
+}
+
+.chart-tooltip-date {
+  font-size:      10px;
+  font-weight:    700;
+  opacity:        .55;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  margin-bottom:  8px;
+}
+
+.chart-tooltip-row {
+  display:       flex;
+  align-items:   center;
+  gap:           8px;
+  margin-bottom: 5px;
+}
+.chart-tooltip-row:last-child { margin-bottom: 0; }
+
+.chart-tooltip-dot {
+  width:         8px;
+  height:        8px;
+  border-radius: 50%;
+  flex-shrink:   0;
+  box-shadow:    0 0 0 1.5px rgba(255,255,255,.25);
+}
+
+.chart-tooltip-name {
+  flex:          1;
+  font-weight:   500;
+  white-space:   nowrap;
+  overflow:      hidden;
+  text-overflow: ellipsis;
+  font-size:     12px;
+}
+
+.chart-tooltip-val {
+  font-weight:         700;
+  font-variant-numeric: tabular-nums;
+  text-align:          right;
+  white-space:         nowrap;
+  font-size:           12px;
+}
+
+.chart-tooltip-divider {
+  height:           1px;
+  background-color: rgba(255,255,255,.15);
+  margin:           6px 0;
+}
+
+.chart-tooltip-goal-row { opacity: .6; }
+
+.chart-tooltip-empty {
+  font-size: 12px;
+  opacity:   .6;
+  margin-bottom: 4px;
+}
+
+/* ── 18. Subjects Screen ─────────────────────────────────────────────────── */
+
+/* ▼ 追加：画面全体で要素が押し合って上にはみ出さないようにする防御壁 */
+.subjects-screen {
+  display:        flex;
+  flex-direction: column;
+  gap:            20px;
+  width:          100%;
+  box-sizing:     border-box;
+  
+  /* ▼ ここを追加！中身が少なくても、上に突き抜けないように位置を固定します */
+  min-height:     70vh;        /* 画面の高さの7割を最初から確保する */
+  justify-content: flex-start; /* 要素を「上から順番に」きれいに並べる（浮かせない） */
+  padding-top:    16px;        /* 上にめり込まないように安全な隙間を作る */
+}
+
+.subject-list {
+  display:        flex;
+  flex-direction: column;
+  gap:            8px;
+  
+  /* ▼ ここを追加！高さを制限して、増えたらこの中だけでスクロールさせます */
+  max-height:     300px;       /* スマホ画面に合わせて適度な高さに制限 */
+  overflow-y:     auto;        /* 中身が増えたら自動でスクロールバーを出す */
+  padding-right:  4px;         /* スクロールバーが被らないための隙間 */
+}
+
+.subject-item {
+  display:           flex;
+  align-items:       center;
+  gap:               12px;
+  padding:           14px 16px;
+  background-color: var(--md-surface-container-low);
+  border-radius:     var(--shape-lg);
+  transition:        background-color 150ms var(--ease-standard);
+}
+
+.subject-item--skeleton {
+  height:  56px;
+  background: linear-gradient(
+    90deg,
+    var(--md-surface-container-low) 0%,
+    var(--md-surface-container-high) 50%,
+    var(--md-surface-container-low) 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s ease-in-out infinite;
+  border-radius: var(--shape-lg);
+}
+
+.subject-item-dot {
+  width:         14px;
+  height:        14px;
+  border-radius: 50%;
+  flex-shrink:   0;
+}
+
+.subject-item-name {
+  flex:        1;
+  font-size:   15px;
+  font-weight: 600;
+  color:       var(--md-on-surface);
+  min-width:   0;
+  overflow:    hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Color picker */
+.color-picker { 
+  display: flex; 
+  flex-direction: column; 
+  gap: 12px; 
+  /* ▼ 追加：縦に潰されないようにする */
+  flex-shrink: 0;
+}
+
+.color-swatches {
+  display:   flex;
+  flex-wrap: wrap;
+  gap:       10px;
+}
+
+.color-swatch {
+  width:         32px;
+  height:        32px;
+  border-radius: 50%;
+  border:        2.5px solid transparent;
+  cursor:        pointer;
+  transition:    transform 150ms var(--ease-spring),
+                 border-color 150ms var(--ease-standard);
+  flex-shrink:   0;
+}
+.color-swatch:hover  { transform: scale(1.12); }
+.color-swatch--selected {
+  border-color: var(--md-on-surface);
+  transform:    scale(1.15);
+}
+
+.color-custom-row {
+  display:     flex;
+  align-items: center;
+  gap:         12px;
+}
+.color-custom-label {
+  font-size:  13px;
+  color:      var(--md-on-surface-variant);
+}
+.color-input-native {
+  width:    36px;
+  height:   36px;
+  border:   none;
+  padding:  0;
+  background: none;
+  cursor:   pointer;
+  border-radius: 50%;
+  overflow: hidden;
+}
+.color-input-native::-webkit-color-swatch-wrapper { padding: 0; }
+.color-input-native::-webkit-color-swatch {
+  border: none;
+  border-radius: 50%;
+}
+.color-hex-label {
+  font-size:   12px;
+  font-weight: 600;
+  color:       var(--md-on-surface-variant);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: .06em;
+}
+
+.subject-preview {
+  display:         flex;
+  align-items:     center;
+  justify-content: center;
+  padding:         8px 0 4px;
+}
+
+/* ── 19. Settings Screen ─────────────────────────────────────────────────── */
+
+.settings-section {
+  margin-bottom: 4px;
+}
+
+.settings-section-title {
+  font-size:      11px;
+  font-weight:    700;
+  color:          var(--md-on-surface-variant);
+  text-transform: uppercase;
+  letter-spacing: .09em;
+  margin-bottom:  12px;
+  opacity:        .8;
+}
+
+.settings-card {
+  background-color: var(--md-surface-container-low);
+  border-radius:    var(--shape-xl);
+  padding:          20px;
+}
+
+.settings-goal-row {
+  display:        flex;
+  flex-direction: column;
+  gap:            6px;
+}
+
+.settings-goal-header {
+  display:         flex;
+  align-items:     center;
+  justify-content: space-between;
+}
+
+.settings-goal-label {
+  font-size:   16px;
+  font-weight: 500;
+  color:       var(--md-on-surface);
+}
+
+.settings-goal-value {
+  font-size:   16px;
+  font-weight: 700;
+  color:       var(--md-primary);
+  font-variant-numeric: tabular-nums;
+  min-width:   72px;
+  text-align:  right;
+}
+
+.settings-slider {
+  -webkit-appearance: none;
+  appearance:         none;
+  width:              100%;
+  height:             4px;
+  border-radius:      var(--shape-full);
+  background:         var(--md-surface-container-high);
+  outline:            none;
+  cursor:             pointer;
+  margin:             12px 0 4px;
+}
+.settings-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width:              22px;
+  height:             22px;
+  border-radius:      50%;
+  background:         var(--md-primary);
+  cursor:             pointer;
+  box-shadow:         var(--md-elevation-1);
+  transition:         transform 150ms var(--ease-spring);
+}
+.settings-slider::-webkit-slider-thumb:active { transform: scale(1.2); }
+.settings-slider::-moz-range-thumb {
+  width:   22px;
+  height:  22px;
+  border:  none;
+  border-radius: 50%;
+  background: var(--md-primary);
+  cursor:  pointer;
+}
+
+.settings-slider-ends {
+  display:         flex;
+  justify-content: space-between;
+  font-size:       11px;
+  color:           var(--md-on-surface-variant);
+  opacity:         .6;
+}
+
+/* ── 20. Snackbar / Toast ────────────────────────────────────────────────── */
+
+.snackbar {
+  position:         fixed;
+  bottom:           calc(var(--nav-height) + var(--safe-bottom) + 12px);
+  left:             50%;
+  transform:        translateX(-50%);
+  background-color: var(--md-inverse-surface);
+  color:            var(--md-inverse-on-surface);
+  padding:          12px 20px;
+  border-radius:    var(--shape-full);
+  font-size:        14px;
+  font-weight:      500;
+  white-space:      nowrap;
+  box-shadow:       var(--md-elevation-2);
+  z-index:          400;
+  animation:        snackbarIn 300ms var(--ease-decelerate) both;
+  pointer-events:   none;
+}
+
+@keyframes snackbarIn {
+  from { opacity: 0; transform: translateX(-50%) translateY(12px); }
+  to   { opacity: 1; transform: translateX(-50%) translateY(0); }
+}
+
+/* ── 21. Phase 5 — SW Update Banner ─────────────────────────────────────── */
+
+.sw-update-banner {
+  position:         fixed;
+  top:              calc(var(--safe-top) + 8px);
+  left:             50%;
+  transform:        translateX(-50%);
+  width:            calc(100% - 32px);
+  max-width:        568px;
+  background-color: var(--md-inverse-surface);
+  color:            var(--md-inverse-on-surface);
+  border-radius:    var(--shape-lg);
+  padding:          12px 16px;
+  display:          flex;
+  align-items:      center;
+  justify-content:  space-between;
+  gap:              8px;
+  z-index:          500;
+  box-shadow:       var(--md-elevation-3);
+  animation:        slideDownFade 280ms var(--ease-decelerate) both;
+}
+
+@keyframes slideDownFade {
+  from { opacity: 0; transform: translateX(-50%) translateY(-12px); }
+  to   { opacity: 1; transform: translateX(-50%) translateY(0); }
+}
+
+.sw-update-text {
+  font-size:   13px;
+  font-weight: 500;
+  flex:        1;
+  min-width:   0;
+  white-space: nowrap;
+  overflow:    hidden;
+  text-overflow: ellipsis;
+}
+
+.sw-update-actions {
+  display:     flex;
+  align-items: center;
+  gap:         4px;
+  flex-shrink: 0;
+}
+
+.sw-update-btn-close {
+  color:    var(--md-inverse-on-surface);
+  font-size: 13px;
+  padding:  8px 10px;
+  opacity:  .72;
+}
+
+.sw-update-btn-apply {
+  background-color: var(--md-inverse-primary);
+  color:            var(--md-on-primary);
+  padding:          8px 14px;
+  border-radius:    var(--shape-full);
+  font-size:        13px;
+  font-weight:      700;
+}
+
+/* ── 22. Phase 5 — Install Banner ────────────────────────────────────────── */
+
+.install-banner {
+  position:         fixed;
+  bottom:           calc(var(--nav-height) + var(--safe-bottom) + 12px);
+  left:             50%;
+  transform:        translateX(-50%);
+  width:            calc(100% - 32px);
+  max-width:        568px;
+  background-color: var(--md-surface-container-high);
+  border:           1px solid var(--md-outline-variant);
+  border-radius:    var(--shape-xl);
+  padding:          14px 16px;
+  display:          flex;
+  align-items:      center;
+  justify-content:  space-between;
+  gap:              12px;
+  z-index:          190;
+  box-shadow:       var(--md-elevation-2);
+  animation:        slideUpFade 300ms var(--ease-decelerate) both;
+}
+
+@keyframes slideUpFade {
+  from { opacity: 0; transform: translateX(-50%) translateY(12px); }
+  to   { opacity: 1; transform: translateX(-50%) translateY(0); }
+}
+
+.install-banner-body {
+  display:     flex;
+  align-items: center;
+  gap:         12px;
+  flex:        1;
+  min-width:   0;
+}
+
+.install-banner-icon {
+  width:            40px;
+  height:           40px;
+  border-radius:    var(--shape-sm);
+  background-color: var(--md-primary-container);
+  color:            var(--md-on-primary-container);
+  display:          flex;
+  align-items:      center;
+  justify-content:  center;
+  flex-shrink:      0;
+}
+
+.install-banner-text {
+  display:        flex;
+  flex-direction: column;
+  gap:            2px;
+  min-width:      0;
+}
+
+.install-banner-title {
+  font-size:   14px;
+  font-weight: 600;
+  color:       var(--md-on-surface);
+}
+
+.install-banner-desc {
+  font-size: 12px;
+  color:     var(--md-on-surface-variant);
+}
+
+.install-banner-actions {
+  display:     flex;
+  align-items: center;
+  gap:         4px;
+  flex-shrink: 0;
+}
+
+.install-banner-btn-close {
+  font-size: 13px;
+  padding:   8px 10px;
+  color:     var(--md-on-surface-variant);
+}
+
+.install-banner-btn-add {
+  background-color: var(--md-primary);
+  color:            var(--md-on-primary);
+  padding:          8px 16px;
+  border-radius:    var(--shape-full);
+  font-size:        13px;
+  font-weight:      700;
+}
+
+/* ── 23. Phase 5 — First-run Overlay ────────────────────────────────────── */
+
+.first-run-overlay {
+  position:         fixed;
+  inset:            0;
+  background-color: var(--md-background);
+  z-index:          600;
+  display:          flex;
+  align-items:      center;
+  justify-content:  center;
+  padding:          32px 24px;
+  animation:        fadeIn 200ms var(--ease-standard) both;
+}
+
+.first-run-card {
+  display:        flex;
+  flex-direction: column;
+  align-items:    center;
+  text-align:     center;
+  max-width:      320px;
+  width:          100%;
+}
+
+.first-run-icon {
+  color:        var(--md-primary);
+  margin-bottom: 28px;
+  opacity:      .9;
+  animation:    scaleIn 400ms 50ms var(--ease-spring) both;
+}
+
+.first-run-title {
+  font-size:      24px;
+  font-weight:    800;
+  color:          var(--md-on-background);
+  margin-bottom:  14px;
+  letter-spacing: -.3px;
+  line-height:    1.2;
+}
+
+.first-run-body {
+  font-size:     15px;
+  color:         var(--md-on-surface-variant);
+  line-height:   1.65;
+  margin-bottom: 40px;
+}
+
+.first-run-btn {
+  width:   100%;
+  padding: 16px 32px;
+  font-size: 15px;
+  animation: scaleIn 350ms 150ms var(--ease-spring) both;
+}
+
+/* ── 24. Utility Classes ─────────────────────────────────────────────────── */
+
+.row { display: flex; align-items: center; }
+.col { display: flex; flex-direction: column; }
+
+.flex-1 { flex: 1; }
+
+.gap-4  { gap: 4px;  }
+.gap-8  { gap: 8px;  }
+.gap-12 { gap: 12px; }
+.gap-16 { gap: 16px; }
+.gap-24 { gap: 24px; }
+
+.mt-8  { margin-top:  8px;  }
+.mt-12 { margin-top:  12px; }
+.mt-16 { margin-top:  16px; }
+.mt-20 { margin-top:  20px; }
+.mt-24 { margin-top:  24px; }
+.mt-32 { margin-top:  32px; }
+
+.mb-8  { margin-bottom: 8px;  }
+.mb-12 { margin-bottom: 12px; }
+.mb-16 { margin-bottom: 16px; }
+
+/* ── 25. Accessibility ───────────────────────────────────────────────────── */
+
+:focus-visible {
+  outline:        2.5px solid var(--md-primary);
+  outline-offset: 3px;
+  border-radius:  var(--shape-xs);
+}
+:focus:not(:focus-visible) { outline: none; }
+
+.btn:focus-visible,
+.chip:focus-visible,
+.nav-item:focus-visible,
+.color-swatch:focus-visible {
+  outline:        2.5px solid var(--md-primary);
+  outline-offset: 2px;
+}
+
+/* ── 26. Android Chrome Optimizations ───────────────────────────────────── */
+
+.nav-item,
+.chip,
+.btn,
+.color-swatch,
+.subject-item {
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.app {
+  overscroll-behavior: none;
+}
+
+/* ── 27. Responsive ──────────────────────────────────────────────────────── */
+
+/* アプリのすべての大元に対して「画面からはみ出たものは絶対に表示するな（横スクロールさせるな）」という最強の命令 */
+html, body, #root, .app {
+  width: 100vw;
+  max-width: 100%;
+  overflow-x: hidden; /* ← これが超重要！横へのはみ出しを強制カットします */
+  box-sizing: border-box;
+}
+
+/* すべての要素のサイズ計算を「枠線を含んだ正しい幅」に統一するお守り */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+@media (min-width: 480px) {
+  .screen {
+    padding-left:  20px;
+    padding-right: 20px;
+  }
+  .stat-grid { gap: 14px; }
+  .timer-time { font-size: 72px; }
+  .btn-round { width: 88px; height: 88px; }
+}
+
+@media (max-width: 360px) {
+  .screen-title   { font-size: 24px; }
+  .stat-value     { font-size: 22px; }
+  .stat-days-num  { font-size: 32px; }
+  .streak-num     { font-size: 36px; }
+  .timer-time     { font-size: 52px; }
+  .screen { padding-left: 12px; padding-right: 12px; }
+}
+
+@media (min-width: 600px) {
+  .app { box-shadow: 0 0 0 1px var(--md-outline-variant); }
+  .screen { padding-left: 24px; padding-right: 24px; }
+}
+
+/* ── 28. Reduced Motion ──────────────────────────────────────────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration:   1ms !important;
+    transition-duration:  1ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
