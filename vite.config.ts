@@ -9,7 +9,6 @@ export default defineConfig({
     VitePWA({
       registerType: 'autoUpdate',
       injectRegister: 'auto',
-      manifest: false,
       workbox: {
         globPatterns: ['**/*.{js,css,html,png,ico,svg,woff2}'],
         cleanupOutdatedCaches: true,
