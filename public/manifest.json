@@ -1,12 +1,12 @@
 {
-  "name": "Study Tracker",
-  "short_name": "Study",
+  "name": "JukenTool",
+  "short_name": "Juken",
   "theme_color": "#6750A4",
   "background_color": "#ffffff",
   "display": "standalone",
   "orientation": "portrait",
-  "scope": "/",
-  "start_url": "/",
+  "scope": "/JukenTool/",
+  "start_url": "/JukenTool/",
   "icons": [
     {
       "src": "/JukenTool/icons/icon-192.png",
