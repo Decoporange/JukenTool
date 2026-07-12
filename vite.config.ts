@@ -9,15 +9,51 @@ export default defineConfig({
     VitePWA({
       registerType: 'autoUpdate',
       injectRegister: 'auto',
+      // 👇 ここにマニフェストの最強設定を直接組み込みました！
+      manifest: {
+        name: "JukenTool",
+        short_name: "Juken",
+        theme_color: "#6750A4",
+        background_color: "#ffffff",
+        display: "standalone",
+        orientation: "portrait",
+        scope: "/JukenTool/",
+        start_url: "/JukenTool/",
+        id: "/JukenTool/",
+        icons: [
+          {
+            src: "icons/icon-192.png",
+            sizes: "192x192",
+            type: "image/png",
+            purpose: "any"
+          },
+          {
+            src: "icons/icon-192.png",
+            sizes: "192x192",
+            type: "image/png",
+            purpose: "maskable"
+          },
+          {
+            src: "icons/icon-512.png",
+            sizes: "512x512",
+            type: "image/png",
+            purpose: "any"
+          },
+          {
+            src: "icons/icon-512.png",
+            sizes: "512x512",
+            type: "image/png",
+            purpose: "maskable"
+          }
+        ]
+      },
       workbox: {
         globPatterns: ['**/*.{js,css,html,png,ico,svg,woff2}'],
         cleanupOutdatedCaches: true,
         skipWaiting: true,
         clientsClaim: true,
-        // Cache the app shell with network-first for HTML, cache-first for assets
         runtimeCaching: [
           {
-            // Navigation requests (HTML) — network first, fallback to cache
             urlPattern: ({ request }) => request.mode === 'navigate',
             handler: 'NetworkFirst',
             options: {
