@@ -13,7 +13,7 @@ export default defineConfig({
       manifest: {
         name: "JukenTool",
         short_name: "Juken",
-        theme_color: "#6750A4",
+        theme_color: "#1C1B1F",
         background_color: "#ffffff",
         display: "standalone",
         orientation: "portrait",
