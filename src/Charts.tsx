@@ -19,6 +19,30 @@ function formatMin(m: number): string {
   return `${h}時間${min}分`
 }
 
+// ── Week navigation helpers ───────────────────────────────────────────────────
+
+function getWeekBounds(offset: number): { monday: Date; sunday: Date } {
+  const today  = new Date()
+  const dow    = today.getDay()
+  const monday = new Date(today)
+  monday.setDate(today.getDate() + (dow === 0 ? -6 : 1 - dow) + offset * 7)
+  monday.setHours(0, 0, 0, 0)
+  const sunday = new Date(monday)
+  sunday.setDate(monday.getDate() + 6)
+  return { monday, sunday }
+}
+
+function getWeekLabel(offset: number): string {
+  if (offset === 0)  return '今週'
+  if (offset === -1) return '先週'
+  const { monday, sunday } = getWeekBounds(offset)
+  const m1 = monday.getMonth() + 1; const d1 = monday.getDate()
+  const m2 = sunday.getMonth() + 1; const d2 = sunday.getDate()
+  return m1 === m2
+    ? `${m1}月${d1}〜${d2}日`
+    : `${m1}月${d1}日〜${m2}月${d2}日`
+}
+
 // ── Weekly Chart ──────────────────────────────────────────────────────────────
 
 interface WeeklyChartProps {
@@ -231,6 +255,8 @@ export default function Charts() {
   const [subjectTotals, setSubjectTotals] = useState<SubjectTotal[]>([])
   const [hasSubjects,   setHasSubjects]   = useState(true)
   const [loading,       setLoading]       = useState(true)
+  // 追加
+  const [weekOffset,    setWeekOffset]    = useState(0)
 
   const load = useCallback(async () => {
     try {
@@ -239,7 +265,7 @@ export default function Charts() {
 
       if (subjects.length > 0) {
         const [weekly, totals] = await Promise.all([
-          getWeeklyStats(subjects, settings),
+          getWeeklyStats(subjects, settings, weekOffset),
           getSubjectTotals(subjects),
         ])
         setWeeklyData(weekly)
@@ -250,7 +276,7 @@ export default function Charts() {
     } finally {
       setLoading(false)
     }
-  }, [])
+  }, [weekOffset])
 
   useEffect(() => { load() }, [load])
 
@@ -303,8 +329,35 @@ export default function Charts() {
       </div>
 
       {/* ── Weekly chart ── */}
+      // 変更後
       <section className="chart-section">
-        <h2 className="chart-section-title">今週の学習</h2>
+        <div className="chart-section-header">
+          <h2 className="chart-section-title">週間学習</h2>
+          <div className="chart-week-nav">
+            <button
+              type="button"
+              className="btn btn-icon"
+              onClick={() => setWeekOffset(w => w - 1)}
+              aria-label="前の週"
+            >
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true">
+                <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/>
+              </svg>
+            </button>
+            <span className="chart-week-label">{getWeekLabel(weekOffset)}</span>
+            <button
+              type="button"
+              className="btn btn-icon"
+              onClick={() => setWeekOffset(w => w + 1)}
+              disabled={weekOffset >= 0}
+              aria-label="次の週"
+            >
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true">
+                <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/>
+              </svg>
+            </button>
+          </div>
+        </div>
         {weeklyData ? (
           <div className="chart-container">
             <WeeklyBarChart data={weeklyData} />

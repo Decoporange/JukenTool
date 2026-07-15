@@ -141,16 +141,22 @@ export async function getTodayStats(): Promise<DailyStats> {
 
 const WEEK_LABELS = ['月', '火', '水', '木', '金', '土', '日'] as const
 
+// 変更後
 export async function getWeeklyStats(
   subjects: Subject[],
   settings: AppSettings,
+  weekOffset: number = 0,
 ): Promise<WeeklyChartData> {
   const today  = new Date()
   const todayStr = toDateStr(today)
   const monday   = getMondayOf(today)
+  monday.setDate(monday.getDate() + weekOffset * 7)
 
-  // Fetch only the days that have passed (mon → today)
-  const records = await getRecords(toDateStr(monday), todayStr)
+  const isCurrentWeek = weekOffset === 0
+  const fetchTo = isCurrentWeek
+    ? todayStr
+    : toDateStr(new Date(monday.getTime() + 6 * 864e5))
+  const records = await getRecords(toDateStr(monday), fetchTo)
 
   // Build map: date → { subjectId → minutes }
   const byDate = new Map<string, Record<string, number>>()
@@ -165,7 +171,8 @@ export async function getWeeklyStats(
     const d = new Date(monday)
     d.setDate(monday.getDate() + i)
     const dateStr    = toDateStr(d)
-    const isFuture   = dateStr > todayStr
+// 変更後
+    const isFuture   = isCurrentWeek && dateStr > todayStr
     const bySubject  = byDate.get(dateStr) ?? {}
     const totalMinutes = Object.values(bySubject).reduce((s, v) => s + v, 0)
 
